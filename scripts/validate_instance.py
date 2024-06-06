@@ -16,6 +16,7 @@ def validate_instance(instance_file, schema_file):
     except jsonschema.exceptions.ValidationError as e:
         print(f"{instance_file} is invalid: {e.message}")
 
+
 def main():
     if len(sys.argv) != 3:
         print("Usage: validate-instance <instance_file> <schema_file>")
@@ -25,6 +26,7 @@ def main():
     schema_file = sys.argv[2]
 
     validate_instance(instance_file, schema_file)
+
 
 if __name__ == "__main__":
     main()
