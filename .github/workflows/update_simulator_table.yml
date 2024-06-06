@@ -31,7 +31,7 @@ jobs:
 
     - name: Generate instances HTML
       run: |
-        python scripts/generate_html.py
+        python scripts/generate_table_html.py
 
     - name: Commit HTML file
       run: |
