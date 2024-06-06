@@ -3,6 +3,7 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.table import Table
+import numpy as np
 
 def load_instances(directory):
     instances = []
