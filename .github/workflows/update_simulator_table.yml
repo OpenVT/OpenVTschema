@@ -1,4 +1,4 @@
-name: Update Instances Table HTML
+name: Update Instances HTML
 
 on:
   push:
@@ -33,11 +33,16 @@ jobs:
       run: |
         python scripts/generate_table_html.py
 
+    - name: Move HTML file to docs directory
+      run: |
+        mkdir -p docs
+        mv instances.html docs/instances.html
+
     - name: Commit HTML file
       run: |
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
-        git add instances.html
+        git add docs/instances.html
         git commit -m 'Generate instances HTML'
         git push
       env:

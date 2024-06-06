@@ -51,7 +51,7 @@ def save_html(file_path, content):
 
 def main():
     instances_directory = "instances"
-    html_path = "instances.html"
+    html_path = "docs/instances.html"  # Save to the docs directory
 
     instances = load_instances(instances_directory)
     html_content = generate_html(instances)
