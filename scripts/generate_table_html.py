@@ -46,6 +46,7 @@ def generate_html(instances):
     return html_content
 
 def save_html(file_path, content):
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)  # Ensure the directory exists
     with open(file_path, 'w') as file:
         file.write(content)
 

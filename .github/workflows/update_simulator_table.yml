@@ -33,11 +33,6 @@ jobs:
       run: |
         python scripts/generate_table_html.py
 
-    - name: Move HTML file to docs directory
-      run: |
-        mkdir -p docs
-        mv instances.html docs/instances.html
-
     - name: Commit HTML file
       run: |
         git config --global user.name 'github-actions'
