@@ -26,20 +26,21 @@ def wrap_text(text, width):
     return "\n".join(wrap(text, width))
 
 def save_table_as_image(df, file_path):
-    fig, ax = plt.subplots(figsize=(14, len(df) * 0.5 + 2))
+    fig, ax = plt.subplots(figsize=(12, len(df) * 0.5 + 2))
     ax.axis('tight')
     ax.axis('off')
 
     cell_text = []
     for row in df.values:
         wrapped_row = [
-            row[0],  # Name
+            wrap_text(row[0], 20),  # Name
             wrap_text(row[1], 40),  # Description
-            row[2]  # Website
+            wrap_text(row[2], 30)  # Website
         ]
         cell_text.append(wrapped_row)
 
-    table = ax.table(cellText=cell_text, colLabels=df.columns, cellLoc='center', loc='center')
+    colWidths = [0.2, 0.5, 0.3]
+    table = ax.table(cellText=cell_text, colLabels=df.columns, cellLoc='center', loc='center', colWidths=colWidths)
     table.auto_set_font_size(False)
     table.set_fontsize(10)
     table.scale(1.2, 1.2)
