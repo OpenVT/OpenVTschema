@@ -4,4 +4,4 @@ This repository contains a global schema for categorizing different simulators a
 
 # Simulators
 
-To see the list of simulators, click [here](https://OpenVT.github.io/OpenVTschema/instances.html).
+![Instances Table](docs/instances_table.png)

@@ -1,4 +1,4 @@
-name: Update Instances HTML
+name: Generate Instances Table Image
 
 on:
   push:
@@ -9,11 +9,11 @@ on:
       - main
 
 jobs:
-  generate-html:
+  generate-image:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write  # Ensures the workflow has write access to commit the new HTML file
+      contents: write
 
     steps:
     - name: Checkout repository
@@ -27,18 +27,18 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install jsonschema
+        pip install matplotlib pandas
 
-    - name: Generate instances HTML
+    - name: Generate instances table image
       run: |
-        python scripts/generate_table_html.py
+        python scripts/generate_table_image.py
 
-    - name: Commit HTML file
+    - name: Commit image
       run: |
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
-        git add docs/instances.html
-        git commit -m 'Generate instances HTML'
+        git add docs/instances_table.png
+        git commit -m 'Generate instances table image'
         git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
