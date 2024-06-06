@@ -1,4 +1,4 @@
-name: Update README
+name: Update Instances Table HTML
 
 on:
   push:
@@ -9,8 +9,11 @@ on:
       - main
 
 jobs:
-  update-readme:
+  generate-html:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write  # Ensures the workflow has write access to commit the new HTML file
 
     steps:
     - name: Checkout repository
@@ -26,16 +29,16 @@ jobs:
         python -m pip install --upgrade pip
         pip install jsonschema
 
-    - name: Update README with instance info
+    - name: Generate instances HTML
       run: |
-        python scripts/update_readme.py
+        python scripts/generate_html.py
 
-    - name: Commit changes
+    - name: Commit HTML file
       run: |
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
-        git add README.md
-        git commit -m 'Update README with instance info'
+        git add instances.html
+        git commit -m 'Generate instances HTML'
         git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
