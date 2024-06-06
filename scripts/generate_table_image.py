@@ -2,7 +2,6 @@ import json
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
-from matplotlib.table import Table
 import numpy as np
 
 def load_instances(directory):
@@ -44,21 +43,20 @@ def save_table_as_image(df, file_path, cell_width=30, cell_height=0.25):
     ax.axis('tight')
     ax.axis('off')
 
-    table = Table(ax, bbox=[0, 0, 1, 1])
+    table = plt.table(cellText=df.values, colLabels=df.columns, cellLoc='center', loc='center')
     table.auto_set_font_size(False)
     table.set_fontsize(10)
+    table.scale(1.2, 1.2)
 
-    n_rows, n_cols = df.shape
-    width_ratios = [1.5, 3]  # Adjust these ratios to change column widths
-    for (i, j), val in np.ndenumerate(df.values):
-        wrapped_text = wrap_text(val, width=cell_width if j == 1 else cell_width)
-        table.add_cell(i, j, width_ratios[j], cell_height, text=wrapped_text, loc='center', facecolor='white')
+    for key, cell in table.get_celld().items():
+        cell.set_edgecolor('grey')
+        if key[0] == 0:
+            cell.set_text_props(weight='bold', color='white')
+            cell.set_facecolor('black')
+        if key[1] == 1:
+            cell._text.set_text(wrap_text(cell._text.get_text(), width=40))
 
-    # Add headers
-    for j, col in enumerate(df.columns):
-        table.add_cell(-1, j, width_ratios[j], cell_height, text=col, loc='center', facecolor='lightgrey')
-
-    ax.add_table(table)
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
     plt.savefig(file_path, bbox_inches='tight', pad_inches=0.1)
     plt.close(fig)
 
