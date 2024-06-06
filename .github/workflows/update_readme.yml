@@ -27,7 +27,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install matplotlib pandas
+        pip install matplotlib pandas numpy
 
     - name: Generate instances table image
       run: |
@@ -37,7 +37,7 @@ jobs:
       run: |
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
-        git add docs/instances_table.png
+        git add --force docs/instances_table.png
         git commit -m 'Generate instances table image'
         git push
       env:
