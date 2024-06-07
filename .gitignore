@@ -1,3 +1,2 @@
-# Ignore the generated table image locally
-docs/instances_table.png
-docs/instances_table.html
+# Ignore the generated doc files
+/docs/*

@@ -1,4 +1,4 @@
-name: Validate Instances
+name: Validate Simulator Schemas
 
 on:
   push:
@@ -28,6 +28,6 @@ jobs:
 
     - name: Validate instance files
       run: |
-        for file in instances/*.json; do
+        for file in simulator_schemas/*.json; do
           validate-instance "$file" global_schema.json || exit 1
         done
