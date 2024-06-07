@@ -10,7 +10,8 @@ def load_instances(directory):
             filepath = os.path.join(directory, filename)
             with open(filepath, 'r') as file:
                 instance = json.load(file)
-                instance['schema_link'] = base_url + filepath.replace("\\", "/")
+                # Construct the correct URL for the schema link
+                instance['schema_link'] = base_url + os.path.join(directory, filename).replace("\\", "/")
                 instances.append(instance)
     return instances
 
