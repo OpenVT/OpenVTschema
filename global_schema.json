@@ -18,11 +18,6 @@
     "category": {
       "type": "string",
       "description": "Category of the simulator",
-      "enum": ["Biological", "Chemical", "Physical", "Ecological", "Environmental", "Other"]
-    },
-    "sub_category": {
-      "type": "string",
-      "description": "Sub-category of the simulator",
       "enum": ["Genome-scale", "Metabolic", "Virtual Tissue", "Ecological Modeling", "Biogeochemical", "Other"]
     },
     "description": {
