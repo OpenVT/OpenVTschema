@@ -4,4 +4,4 @@ This repository contains a global schema for categorizing different simulators a
 
 # Simulators
 
-![Instances Table](docs/instances_table.png)
+To see the list of simulators, click [here](docs/instances_table.html).

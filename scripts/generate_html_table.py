@@ -1,8 +1,6 @@
 import json
 import os
 import pandas as pd
-import matplotlib.pyplot as plt
-from pandas.plotting import table
 
 def load_instances(directory):
     instances = []
@@ -22,42 +20,53 @@ def generate_table(instances):
         data.append([name, description, website])
     return pd.DataFrame(data, columns=["Name", "Description", "Website"])
 
-def save_table_as_image(df, file_path):
+def save_table_as_html(df, file_path):
     if df.empty:
         print("No data to display.")
         return
 
-    # Create figure and axis
-    fig, ax = plt.subplots(figsize=(12, len(df) * 0.5 + 1))
-    ax.axis('off')
+    # Make website links clickable
+    df['Website'] = df['Website'].apply(lambda x: f'<a href="{x}">{x}</a>')
 
-    # Create table
-    tbl = table(ax, df, loc='center', cellLoc='center', colWidths=[0.2, 0.5, 0.3])
-    tbl.auto_set_font_size(False)
-    tbl.set_fontsize(12)
+    # Create HTML table
+    html_table = df.to_html(escape=False, index=False)
 
-    # Style the table
-    for key, cell in tbl.get_celld().items():
-        cell.set_edgecolor('grey')
-        if key[0] == 0:
-            cell.set_text_props(weight='bold', color='white')
-            cell.set_facecolor('black')
+    # Define HTML template for better styling
+    html_template = f"""
+    <html>
+    <head>
+    <style>
+        table, th, td {{
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+            text-align: left;
+        }}
+        th {{
+            background-color: black;
+            color: white;
+        }}
+    </style>
+    </head>
+    <body>
+    <h1>Simulators</h1>
+    {html_table}
+    </body>
+    </html>
+    """
 
-    # Adjust column widths
-    for i in range(len(df.columns)):
-        tbl.auto_set_column_width(i)
-
+    # Save HTML to a file
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
-    plt.savefig(file_path, bbox_inches='tight', pad_inches=0.1, dpi=300)
-    plt.close(fig)
+    with open(file_path, 'w') as f:
+        f.write(html_template)
 
 def main():
     instances_directory = "instances"
-    output_path = "docs/instances_table.png"
+    output_path = "docs/instances_table.html"
 
     instances = load_instances(instances_directory)
     df = generate_table(instances)
-    save_table_as_image(df, output_path)
+    save_table_as_html(df, output_path)
 
 if __name__ == "__main__":
     main()

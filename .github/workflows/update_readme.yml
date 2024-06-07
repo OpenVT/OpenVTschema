@@ -1,4 +1,4 @@
-name: Generate Instances Table Image
+name: Generate Instances HTML Table
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  generate-image:
+  generate-html:
     runs-on: ubuntu-latest
 
     permissions:
@@ -27,18 +27,18 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install matplotlib pandas
+        pip install pandas
 
-    - name: Generate instances table image
+    - name: Generate instances table HTML
       run: |
-        python scripts/generate_table_image.py
+        python scripts/generate_html_table.py
 
-    - name: Commit image
+    - name: Commit HTML file
       run: |
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
-        git add --force docs/instances_table.png
-        git commit -m 'Generate instances table image'
+        git add --force docs/instances_table.html
+        git commit -m 'Generate instances table HTML'
         git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
