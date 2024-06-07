@@ -4,7 +4,7 @@
   "version": "1.8.0",
   "category": "Biological",
   "sub_category": "Virtual Tissue",
-  "description": "PhysiCell is an open-source physics-based cell simulator that models 3D multicellular systems, focusing on the interactions of cells with their microenvironment, including the use of the Cellular Potts Model.",
+  "description": "PhysiCell is an open-source physics-based cell simulator that models 3D multicellular systems, focusing on the interactions of cells with their microenvironment, including the use of center-based models.",
   "platform": "Cross-platform",
   "input_formats": ["XML", "MATLAB", "SBML"],
   "output_formats": ["MAT", "CSV", "VTK"],

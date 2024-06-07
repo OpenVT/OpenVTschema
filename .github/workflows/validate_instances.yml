@@ -27,7 +27,30 @@ jobs:
         pip install .
 
     - name: Validate instance files
+      id: validate
       run: |
         for file in instances/*.json; do
-          validate-instance "$file" global_schema.json
+          validate-instance "$file" global_schema.json || exit 1
         done
+
+    - name: Set validation badge to "passed"
+      if: success()
+      run: |
+        BADGE_URL='https://img.shields.io/badge/validation-passed-brightgreen'
+        sed -i 's|https://img.shields.io/badge/validation-.*|'"$BADGE_URL"'|g' README.md
+
+    - name: Set validation badge to "failed"
+      if: failure()
+      run: |
+        BADGE_URL='https://img.shields.io/badge/validation-failed-red'
+        sed -i 's|https://img.shields.io/badge/validation-.*|'"$BADGE_URL"'|g' README.md
+
+    - name: Commit badge update
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git add README.md
+        git commit -m 'Update validation badge'
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

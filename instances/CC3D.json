@@ -4,7 +4,7 @@
   "version": "4.3.0",
   "category": "Biological",
   "sub_category": "Virtual Tissue",
-  "description": "A flexible and extensible simulation environment for multi-cellular systems biology.",
+  "description": "A flexible and extensible simulation environment for multi-cellular systems biology, including the use of cellular Potts models (CPMs).",
   "platform": "Cross-platform",
   "input_formats": ["XML", "SBML", "Python"],
   "output_formats": ["VTK", "CSV", "HDF5"],
