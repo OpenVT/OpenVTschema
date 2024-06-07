@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write
+      contents: write  # Ensures the workflow has write access to commit the updated HTML file
 
     steps:
     - name: Checkout repository
@@ -38,7 +38,7 @@ jobs:
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
         git add --force docs/instances_table.html
-        git commit -m 'Generate instances table HTML'
-        git push
+        git commit -m 'Generate instances table HTML' || echo "No changes to commit"
+        git push || echo "Push failed"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
