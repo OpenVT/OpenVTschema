@@ -8,7 +8,9 @@ def load_instances(directory):
         if filename.endswith(".json"):
             filepath = os.path.join(directory, filename)
             with open(filepath, 'r') as file:
-                instances.append(json.load(file))
+                instance = json.load(file)
+                instance['schema_link'] = filepath
+                instances.append(instance)
     return instances
 
 def generate_table(instances):
@@ -17,16 +19,18 @@ def generate_table(instances):
         name = instance.get("name", "N/A")
         description = instance.get("description", "N/A")
         website = instance.get("website", "N/A")
-        data.append([name, description, website])
-    return pd.DataFrame(data, columns=["Name", "Description", "Website"])
+        schema_link = instance.get("schema_link", "N/A")
+        data.append([name, description, website, schema_link])
+    return pd.DataFrame(data, columns=["Name", "Description", "Website", "Schema"])
 
 def save_table_as_html(df, file_path):
     if df.empty:
         print("No data to display.")
         return
 
-    # Make website links clickable
+    # Make website and schema links clickable
     df['Website'] = df['Website'].apply(lambda x: f'<a href="{x}">{x}</a>')
+    df['Schema'] = df['Schema'].apply(lambda x: f'<a href="{x}">Link</a>')
 
     # Create HTML table
     html_table = df.to_html(escape=False, index=False)
