@@ -2,7 +2,7 @@
 
 This repository contains a global schema for categorizing different simulators and specific instances of that schema.
 
-![Validation](https://img.shields.io/github/actions/workflow/status/OpenVT/OpenVTschema/validate-instances.yml?branch=main&label=validation)
+![Validation](https://badgen.net/github/checks/OpenVT/OpenVTschema/main?label=validation)
 
 # Simulators
 
