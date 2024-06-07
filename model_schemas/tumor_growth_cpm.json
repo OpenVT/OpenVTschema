@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Tumor Growth Simulation of CC3D",
+  "type": "object",
+  "properties": {
+    "model_id": "cc3d_001",
+    "model_name": "Tumor Growth Simulation",
+    "simulator": "CompuCell3D",
+    "description": "A model to simulate tumor growth and cell interactions using CompuCell3D.",
+    "input_files": ["tumor_growth.xml", "simulation.py"],
+    "output_files": ["results.vtk", "analysis.csv"],
+    "parameters": {
+      "cell_type": "tumor",
+      "growth_rate": 0.05,
+      "division_rate": 0.01,
+      "diffusion_coefficient": 0.1
+    },
+    "last_updated": "2024-01-01"
+  },
+  "required": ["model_id", "model_name", "simulator", "description", "input_files", "output_files", "parameters"]
+}
