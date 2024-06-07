@@ -4,12 +4,13 @@ import pandas as pd
 
 def load_instances(directory):
     instances = []
+    base_url = "https://raw.githubusercontent.com/OpenVT/OpenVTschema/main/"
     for filename in os.listdir(directory):
         if filename.endswith(".json"):
             filepath = os.path.join(directory, filename)
             with open(filepath, 'r') as file:
                 instance = json.load(file)
-                instance['schema_link'] = filepath
+                instance['schema_link'] = base_url + filepath.replace("\\", "/")
                 instances.append(instance)
     return instances
 
