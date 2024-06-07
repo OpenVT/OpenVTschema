@@ -67,7 +67,7 @@ def save_table_as_html(df, file_path):
         f.write(html_template)
 
 def main():
-    instances_directory = "instances"
+    instances_directory = "simulator_schemas"
     output_path = "docs/instances_table.html"
 
     instances = load_instances(instances_directory)
