@@ -1,5 +1,5 @@
 {
-  "simulator_id": "sim_004",
+  "simulator_id": "sim_003",
   "name": "Chaste",
   "version": "2024.1",
   "category": "Virtual Tissue",
@@ -11,7 +11,7 @@
   "license": "Open-source",
   "website": "https://www.cs.ox.ac.uk/chaste",
   "documentation": "https://chaste.cs.ox.ac.uk/documentation",
-  "last_updated": "2024-01-01",
+  "last_updated": "2024-06-01",
   "objects": [
     {
       "object_id": "obj_001",

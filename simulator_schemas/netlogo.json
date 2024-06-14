@@ -1,0 +1,70 @@
+{
+  "simulator_id": "sim_009",
+  "name": "NetLogo",
+  "version": "",
+  "category": "Virtual Tissue",
+  "description": "A multi-agent programmable modeling environment.",
+  "platform": "Cross-platform",
+  "input_formats": [],
+  "output_formats": [],
+  "developer": "NetLogo Development Team",
+  "license": "Open-source",
+  "website": "https://ccl.northwestern.edu/netlogo/",
+  "documentation": "",
+  "last_updated": "2024-06-01",
+  "objects": [
+    {
+      "object_id": "obj_001",
+      "name": "Cell",
+      "attributes": ["type", "volume", "surface_area"]
+    },
+    {
+      "object_id": "obj_002",
+      "name": "ChemicalField",
+      "attributes": ["name", "concentration", "diffusion_coefficient"]
+    }
+  ],
+  "processes": [
+    {
+      "process_id": "proc_001",
+      "name": "CellGrowth",
+      "description": "Process describing the growth of cells over time."
+    },
+    {
+      "process_id": "proc_002",
+      "name": "CellDivision",
+      "description": "Process describing the division of cells."
+    },
+    {
+      "process_id": "proc_003",
+      "name": "ChemicalDiffusion",
+      "description": "Process describing the diffusion of chemicals within the tissue."
+    }
+  ],
+  "boundaries": {
+    "spatial": "tissue-scale",
+    "temporal": "dynamic"
+  },
+  "containment": [
+    {
+      "container_id": "obj_001",
+      "contained_id": "proc_001"
+    },
+    {
+      "container_id": "obj_001",
+      "contained_id": "proc_002"
+    },
+    {
+      "container_id": "obj_002",
+      "contained_id": "proc_003"
+    }
+  ],
+  "inheritance": [],
+  "orchestration": [
+    {
+      "orchestration_id": "orc_001",
+      "name": "Tissue Simulation",
+      "steps": ["initialize", "run", "analyze"]
+    }
+  ]
+}
