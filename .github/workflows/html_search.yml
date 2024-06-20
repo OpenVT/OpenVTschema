@@ -30,10 +30,9 @@ jobs:
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
         git add --force docs/search.html
-	git add --force docs/search.js
-	git add --force docs/simulator_schemas/*.json
+        git add --force docs/search.js
+        git add --force docs/simulator_schemas/*.json
         git commit -m 'Generate instances search HTML' || echo "No changes to commit"
         git push || echo "Push failed"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-		
