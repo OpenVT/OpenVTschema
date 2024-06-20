@@ -43,7 +43,7 @@ async function getOptions(typeStr) {
 	for(let i= 0; i< frameworkNames.length; i++) {
 	//const jsonName = "artistoo.json"
 	  const jsonName = frameworkNames[i];
-	  const jsonURL = "/simulator_schemas/"+ jsonName;
+	  const jsonURL = "../simulator_schemas/"+ jsonName;
 	  await fetch(jsonURL)
 		 .then((response) => response.json())
 		 .then((json) => {
