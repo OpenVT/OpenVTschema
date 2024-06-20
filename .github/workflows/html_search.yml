@@ -21,8 +21,8 @@ jobs:
 
     - name: Copy files to docs dir
       run: |
-        cp scripts/js/search.html docs
-	cp scripts/js/search.js docs 
+        cp scripts/js/search.html docs 
+        cp scripts/js/search.js docs 
         cp simulator_schemas/*.json docs/simulator_schemas
 
     - name: Commit files copied to docs
