@@ -9,7 +9,7 @@
   "output_formats": ["VTK", "CSV", "HDF5"],
   "developer": "CompuCell3D Development Team",
   "license": "Open-source",
-  "website": "href=http://www.compucell3d.org",
+  "website": "http://www.compucell3d.org",
   "documentation": "http://www.compucell3d.org/Documentation",
   "last_updated": "2024-06-01",
   "objects": [
