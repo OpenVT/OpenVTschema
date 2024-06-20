@@ -1,0 +1,70 @@
+{
+  "simulator_id": "sim_002",
+  "name": "PhysiCell",
+  "version": "1.13.1",
+  "category": "Virtual Tissue",
+  "description": "A physics-based cell simulator that models 3D multicellular systems, focusing on the interactions of (off-lattice) cells with their microenvironment.",
+  "platform": "Cross-platform",
+  "input_formats": ["XML", "CSV", "MATLAB", "SBML"],
+  "output_formats": ["SVG", "MAT", "CSV", "VTK"],
+  "developer": "PhysiCell Development Team",
+  "license": "Open-source",
+  "website": "http://physicell.org",
+  "documentation": "http://physicell.mathcancer.org/documentation",
+  "last_updated": "2024-06-01",
+  "objects": [
+    {
+      "object_id": "obj_001",
+      "name": "Cell",
+      "attributes": ["position", "volume", "state"]
+    },
+    {
+      "object_id": "obj_002",
+      "name": "Microenvironment",
+      "attributes": ["oxygen", "nutrients", "waste"]
+    }
+  ],
+  "processes": [
+    {
+      "process_id": "proc_001",
+      "name": "CellProliferation",
+      "description": "Process describing the proliferation and division of cells."
+    },
+    {
+      "process_id": "proc_002",
+      "name": "CellMigration",
+      "description": "Process describing the movement of cells within the microenvironment."
+    },
+    {
+      "process_id": "proc_003",
+      "name": "CellDeath",
+      "description": "Process describing programmed cell death (apoptosis) and necrosis."
+    }
+  ],
+  "boundaries": {
+    "spatial": "3D-tissue",
+    "temporal": "dynamic"
+  },
+  "containment": [
+    {
+      "container_id": "obj_001",
+      "contained_id": "proc_001"
+    },
+    {
+      "container_id": "obj_001",
+      "contained_id": "proc_002"
+    },
+    {
+      "container_id": "obj_002",
+      "contained_id": "proc_003"
+    }
+  ],
+  "inheritance": [],
+  "orchestration": [
+    {
+      "orchestration_id": "orc_001",
+      "name": "Tissue Simulation",
+      "steps": ["initialize", "run", "analyze"]
+    }
+  ]
+}
