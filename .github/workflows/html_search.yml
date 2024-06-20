@@ -22,16 +22,16 @@ jobs:
     - name: Copy files to docs dir
       run: |
         cp scripts/js/search.html docs
-		    cp scripts/js/search.js docs
-		    cp simulator_schemas/*.json docs/simulator_schemas
+	cp scripts/js/search.js docs
+	cp simulator_schemas/*.json docs/simulator_schemas
 
     - name: Commit files copied to docs
       run: |
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
         git add --force docs/search.html
-		    git add --force docs/search.js
-		    git add --force docs/simulator_schemas/*.json
+	git add --force docs/search.js
+	git add --force docs/simulator_schemas/*.json
         git commit -m 'Generate instances search HTML' || echo "No changes to commit"
         git push || echo "Push failed"
       env:
