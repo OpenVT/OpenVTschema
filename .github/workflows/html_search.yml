@@ -23,6 +23,7 @@ jobs:
       run: |
         cp scripts/js/search.html docs 
         cp scripts/js/search.js docs 
+        rmdir docs/simulator_schemas
         mkdir docs/simulator_schemas
         cp simulator_schemas/*.json docs/simulator_schemas
 
