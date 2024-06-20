@@ -1,0 +1,39 @@
+name: Generate html search framework page
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  generate-html:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write  # Ensures the workflow has write access to commit the updated HTML file
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Copy files to docs dir
+      run: |
+        cp scripts/js/search.html docs
+		    cp scripts/js/search.js docs
+		    cp simulator_schemas/*.json docs/simulator_schemas
+
+    - name: Commit files copied to docs
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git add --force docs/search.html
+		    git add --force docs/search.js
+		    git add --force docs/simulator_schemas/*.json
+        git commit -m 'Generate instances search HTML' || echo "No changes to commit"
+        git push || echo "Push failed"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+		
