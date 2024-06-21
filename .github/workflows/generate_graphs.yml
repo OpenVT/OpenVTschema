@@ -1,0 +1,44 @@
+name: Generate Graphs
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  generate-graphs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install graphviz pydot
+
+    - name: Install Graphviz
+      run: sudo apt-get install graphviz
+
+    - name: Generate graphs
+      run: |
+        python scripts/generate_graph.py
+
+    - name: Commit graph images
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git add docs/*.png
+        git commit -m 'Generate simulator graphs'
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
