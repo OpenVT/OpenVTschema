@@ -47,8 +47,8 @@ def save_graph(dot, file_path):
     dot.render(file_path, format='png')
 
 def main():
-    instances_directory = '../simulator_schemas'
-    output_directory = '../docs'
+    instances_directory = 'simulator_schemas'
+    output_directory = 'docs'
 
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
@@ -60,6 +60,7 @@ def main():
             dot = create_graph(instance)
             output_file = os.path.join(output_directory, f"{os.path.splitext(filename)[0]}_graph")
             save_graph(dot, output_file)
+
 
 if __name__ == "__main__":
     main()
