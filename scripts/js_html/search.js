@@ -27,7 +27,7 @@ async function loadOptions (optionTypeStr, htmlElementId) {
 }
 
 async function processSelection(objType, selectionId) {
-console.log("Hi " + selectionId);
+//console.log("Hi " + selectionId);
   const indexSelection = document.getElementById(selectionId).selectedIndex;
   const htmlOptions = document.getElementById(selectionId).options;
   const frameworksMap = await getFrameworksThatSupport(htmlOptions[indexSelection].text, objType); 
@@ -48,12 +48,14 @@ async function getOptions(typeStr) {
 		 .then((response) => response.json())
 		 .then((json) => {
 	   //console.log(json);
-	 	  cachedData = json;
-		  const newobjs = cachedData[typeStr];
+		  const newobjs = json[typeStr];
 		  for(const id in newobjs) {
 		    //console.log(id+ ": "+ newobjs[id].name);
 			if ( objectsMap.get(newobjs[id].name) == null) {// new object
-			  objectsMap.set(newobjs[id].name,newobjs[id].description); 
+			  if(typeStr.includes("object")) {
+				objectsMap.set(newobjs[id].name,newobjs[id].attributes);  
+			  }
+			  else { objectsMap.set(newobjs[id].name,newobjs[id].description);} // process  
 			}
 		  }
 	  });
@@ -62,7 +64,13 @@ async function getOptions(typeStr) {
 	return objectsMap;
 }
 
-// returns Map of framework name and URL
+/**
+ * Function that gets frameworks that support a specific object (object can be any top-level name in schema)
+ * @param {supportedObjStr, objTypeStr} 
+ *         supportedObjStr - string with name of support that is searched for in each specific framework json file.
+ *         objTypeStr - string with top level name in schema to look for support under.
+ * @returns {frameworksMap} - Returns data from frameworks schema that support 'supportedObjStr'.
+ */
 async function getFrameworksThatSupport(supportedObjStr, objTypeStr) {
   const frameworksMap = new Map();
   for(let i= 0; i< frameworkNames.length; i++) {
@@ -78,7 +86,7 @@ async function getFrameworksThatSupport(supportedObjStr, objTypeStr) {
 		  for(const id in newobjs) {
 		    //console.log(id+ ": "+ newobjs[id].name);
 			if ( newobjs[id].name === supportedObjStr) {
-			  frameworksMap.set(frameworkData.name,frameworkData.description); 
+			  frameworksMap.set(frameworkData.name,{description:frameworkData.description, url:frameworkData.website}); 
 			}
 		  }
 	  });
@@ -88,7 +96,15 @@ async function getFrameworksThatSupport(supportedObjStr, objTypeStr) {
 	
 }
 
+/**
+ * Function to fill in an HTML table with data from frameworks schema
+ * @param {frameworksMap, objectType} 
+ *         frameworksMap - The Map that contains data for table.
+ *         objectType - string with clue to id of the table to be filled out.
+ * @returns {} - Nothing returned, fills out html table.
+ */
 async function fillOutTable(frameworksMap, objType) {
+// TODO: since this fills out a specific HTML table, move it out of this file.
   let table;
   if ( objType.includes("object")) {
 	table = document.getElementById(htmlObjTable)
@@ -96,10 +112,6 @@ async function fillOutTable(frameworksMap, objType) {
   else {
 	table = document.getElementById(htmlProcessTable)
   }
- // DELETE OLd results first.
- // for(var i = 1;i<table.rows.length;){
- //   table.deleteRow(i);
- // }
   table.innerHTML = ""; // clear table
   
   tblHeader = document.createElement("thead");
@@ -112,6 +124,10 @@ async function fillOutTable(frameworksMap, objType) {
   const cellText2 = document.createTextNode("Description");
   cell2.appendChild(cellText2);
   row.appendChild(cell2)
+   const cell3 = document.createElement("th");
+  const cellText3 = document.createTextNode("Website");
+  cell3.appendChild(cellText3);
+  row.appendChild(cell3)
   tblHeader.appendChild(row);
   table.appendChild(tblHeader);
   
@@ -125,9 +141,13 @@ async function fillOutTable(frameworksMap, objType) {
     cell.appendChild(cellText);
 	row.appendChild(cell)
 	const cell2 = document.createElement("td");
-    const cellText2 = document.createTextNode(value);
+    const cellText2 = document.createTextNode(value.description);
     cell2.appendChild(cellText2);
     row.appendChild(cell2)
+	const cell3 = document.createElement("td");
+    const cellText3 = document.createTextNode(value.url);
+    cell3.appendChild(cellText3);
+    row.appendChild(cell3)
 	tblbody.appendChild(row);
   }	  
   table.appendChild(tblbody);
