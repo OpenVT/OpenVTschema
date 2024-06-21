@@ -1,0 +1,7 @@
+// SimuCell3D
+digraph {
+	obj_001 [label="Cell
+Attributes: type, volume, surface_area" shape=ellipse]
+	obj_002 [label="ChemicalField
+Attributes: name, concentration, diffusion_coefficient" shape=ellipse]
+}

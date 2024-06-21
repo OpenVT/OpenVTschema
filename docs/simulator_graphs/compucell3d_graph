@@ -1,0 +1,26 @@
+// CompuCell3D
+digraph {
+	obj_001 [label="Cell
+Attributes: type, volume, surface_area" shape=ellipse]
+	proc_001 [label="CellGrowth
+Process describing the growth of cells over time." shape=box]
+	obj_001 -> proc_001 [label=uses]
+	proc_002 [label="CellDivision
+Process describing the division of cells." shape=box]
+	obj_001 -> proc_002 [label=uses]
+	bc_001 [label="Dirichlet BC
+Value: 1.0" shape=diamond]
+	obj_001 -> bc_001 [label="adheres to"]
+	bc_002 [label="Neumann BC
+Value: 0.0" shape=diamond]
+	obj_001 -> bc_002 [label="adheres to"]
+	obj_002 [label="ChemicalField
+Attributes: name, concentration, diffusion_coefficient" shape=ellipse]
+	proc_003 [label="ChemicalDiffusion
+Process describing the diffusion of chemicals within the tissue." shape=box]
+	obj_002 -> proc_003 [label=uses]
+	bc_001 [label="Dirichlet BC
+Value: 1.0" shape=diamond]
+	obj_002 -> bc_001 [label="adheres to"]
+	obj_002 -> obj_001 [label=contains]
+}

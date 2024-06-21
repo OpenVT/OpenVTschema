@@ -1,0 +1,7 @@
+// BioDynaMo
+digraph {
+	obj_001 [label="Cell
+Attributes: position, volume, state" shape=ellipse]
+	obj_002 [label="Microenvironment
+Attributes: oxygen, nutrients, waste" shape=ellipse]
+}

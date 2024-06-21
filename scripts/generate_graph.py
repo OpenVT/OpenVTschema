@@ -48,7 +48,7 @@ def save_graph(dot, file_path):
 
 def main():
     instances_directory = 'simulator_schemas'
-    output_directory = 'docs'
+    output_directory = 'docs/simulator_graphs'
 
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
