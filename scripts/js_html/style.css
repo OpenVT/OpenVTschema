@@ -1,0 +1,39 @@
+body{
+background-color: #A9CCE3;
+}
+body::-webkit-scrollbar {
+display: none;
+}
+h1{
+color: #293D56;
+text-align: center;
+font-size: 45px;
+}
+h2{
+text-align: center;
+font-size: 25px;
+}
+
+h3{
+text-align: center;
+font-size: 20px;
+}
+
+* {
+margin-left: 10;
+padding: 10;
+box-sizing: border-box;
+font-family: "Trebuchet MS",
+Arial, Helvetica, sans-serif;
+}
+
+ul {
+  list-style-position: inside;
+  
+}
+
+div {
+margin-top: 2%;
+margin-left: 5%;
+}
+
