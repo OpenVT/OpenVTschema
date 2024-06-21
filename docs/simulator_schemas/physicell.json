@@ -11,5 +11,34 @@
   "license": "Open-source",
   "website": "http://physicell.org",
   "documentation": "http://physicell.mathcancer.org/documentation",
-  "last_updated": "2024-06-01"
+  "last_updated": "2024-06-01",
+  "objects": [
+    {
+      "object_id": "obj_001",
+      "name": "Cell",
+      "attributes": ["position", "volume", "state"]
+    },
+    {
+      "object_id": "obj_002",
+      "name": "Microenvironment",
+      "attributes": ["oxygen", "nutrients", "waste"]
+    }
+  ],
+  "processes": [
+    {
+      "process_id": "proc_001",
+      "name": "CellProliferation",
+      "description": "Process describing the proliferation and division of cells."
+    },
+    {
+      "process_id": "proc_002",
+      "name": "CellMigration",
+      "description": "Process describing the movement of cells within the microenvironment."
+    },
+    {
+      "process_id": "proc_003",
+      "name": "CellDeath",
+      "description": "Process describing programmed cell death (apoptosis) and necrosis."
+    }
+  ]
 }

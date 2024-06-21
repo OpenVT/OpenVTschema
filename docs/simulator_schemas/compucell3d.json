@@ -16,16 +16,12 @@
     {
       "object_id": "obj_001",
       "name": "Cell",
-      "attributes": ["type", "volume", "surface_area"],
-      "processes": ["proc_001", "proc_002"],
-      "boundary_conditions": ["bc_001", "bc_002"]
+      "attributes": ["type", "volume", "surface_area"]
     },
     {
       "object_id": "obj_002",
       "name": "ChemicalField",
-      "attributes": ["name", "concentration", "diffusion_coefficient"],
-      "processes": ["proc_003"],
-      "boundary_conditions": ["bc_001"]
+      "attributes": ["name", "concentration", "diffusion_coefficient"]
     }
   ],
   "processes": [
@@ -46,33 +42,29 @@
     }
   ],
   "boundaries": {
-    "pde_boundary_conditions": [
-      {
-        "bc_id": "bc_001",
-        "description": "Dirichlet boundary condition for chemical concentration",
-        "type": "Dirichlet",
-        "value": 1.0
-      },
-      {
-        "bc_id": "bc_002",
-        "description": "Neumann boundary condition for chemical flux",
-        "type": "Neumann",
-        "value": 0.0
-      }
-    ],
-    "geometric_constraints": [
-      {
-        "gc_id": "gc_001",
-        "description": "Periodic boundary condition for cell movement",
-        "type": "Periodic",
-        "dimensions": ["x", "y"]
-      }
-    ]
+    "spatial": "tissue-scale",
+    "temporal": "dynamic"
   },
   "containment": [
     {
-      "outer_object_id": "obj_002",
-      "inner_object_id": "obj_001"
+      "container_id": "obj_001",
+      "contained_id": "proc_001"
+    },
+    {
+      "container_id": "obj_001",
+      "contained_id": "proc_002"
+    },
+    {
+      "container_id": "obj_002",
+      "contained_id": "proc_003"
+    }
+  ],
+  "inheritance": [],
+  "orchestration": [
+    {
+      "orchestration_id": "orc_001",
+      "name": "Tissue Simulation",
+      "steps": ["initialize", "run", "analyze"]
     }
   ]
 }

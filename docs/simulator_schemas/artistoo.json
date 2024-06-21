@@ -11,5 +11,34 @@
   "license": "Open-source",
   "website": "https://artistoo.net",
   "documentation": "",
-  "last_updated": "2024-06-01"
+  "last_updated": "2024-06-01",
+  "objects": [
+    {
+      "object_id": "obj_001",
+      "name": "Cell",
+      "attributes": ["type", "volume", "surface_area"]
+    },
+    {
+      "object_id": "obj_002",
+      "name": "ChemicalField",
+      "attributes": ["name", "concentration", "diffusion_coefficient"]
+    }
+  ],
+  "processes": [
+    {
+      "process_id": "proc_001",
+      "name": "CellGrowth",
+      "description": "Process describing the growth of cells over time."
+    },
+    {
+      "process_id": "proc_002",
+      "name": "CellDivision",
+      "description": "Process describing the division of cells."
+    },
+    {
+      "process_id": "proc_003",
+      "name": "ChemicalDiffusion",
+      "description": "Process describing the diffusion of chemicals within the tissue."
+    }
+  ]
 }

@@ -11,5 +11,34 @@
   "license": "Open-source",
   "website": "https://www.cs.ox.ac.uk/chaste",
   "documentation": "https://chaste.cs.ox.ac.uk/documentation",
-  "last_updated": "2024-06-01"
+  "last_updated": "2024-06-01",
+  "objects": [
+    {
+      "object_id": "obj_001",
+      "name": "Cell",
+      "attributes": ["type", "position", "state"]
+    },
+    {
+      "object_id": "obj_002",
+      "name": "Tissue",
+      "attributes": ["structure", "composition", "mechanical_properties"]
+    }
+  ],
+  "processes": [
+    {
+      "process_id": "proc_001",
+      "name": "Electrophysiology",
+      "description": "Process describing the electrical activity within cardiac tissue."
+    },
+    {
+      "process_id": "proc_002",
+      "name": "CellProliferation",
+      "description": "Process describing the proliferation and growth of cells."
+    },
+    {
+      "process_id": "proc_003",
+      "name": "CellMigration",
+      "description": "Process describing the movement and migration of cells."
+    }
+  ]
 }
