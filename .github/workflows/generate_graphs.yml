@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write  # Ensure the token has write permissions
+
 jobs:
   generate-graphs:
     runs-on: ubuntu-latest
@@ -29,7 +32,7 @@ jobs:
     - name: Install Graphviz
       run: sudo apt-get install graphviz
 
-    - name: Generate graphs
+    - name: Generate graphs for all simulators
       run: |
         python scripts/generate_graph.py
 
