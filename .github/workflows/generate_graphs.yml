@@ -35,8 +35,10 @@ jobs:
     - name: Determine changed simulator schemas
       id: changes
       run: |
-        # Get the list of files changed in the last commit
-        files=$(git diff --name-only HEAD~1 HEAD)
+        # Fetch all branches to ensure we can compare with the main branch
+        git fetch origin main
+        # Get the list of files changed in the current branch compared to the main branch
+        files=$(git diff --name-only origin/main)
         # Filter for simulator schema files
         schemas=""
         for file in $files; do
