@@ -16,12 +16,14 @@
     {
       "object_id": "obj_001",
       "name": "Cell",
-      "attributes": ["type", "position", "state"]
+      "attributes": ["type", "position", "state"],
+      "processes": ["proc_002, proc_003"]
     },
     {
       "object_id": "obj_002",
       "name": "Tissue",
-      "attributes": ["structure", "composition", "mechanical_properties"]
+      "attributes": ["structure", "composition", "mechanical_properties"],
+      "processes": ["proc_001"]
     }
   ],
   "processes": [
