@@ -32,41 +32,16 @@ jobs:
     - name: Install Graphviz
       run: sudo apt-get install graphviz
 
-    - name: Check for changes in simulator_schemas
-      id: changes
-      run: |
-        # Fetch all branches to ensure we can compare with the main branch
-        git fetch origin main
-        # Get the list of files changed in the current branch compared to the main branch
-        files=$(git diff --name-only origin/main)
-        # Check if there are changes in the simulator_schemas directory
-        changes_detected="false"
-        for file in $files; do
-          if [[ "$file" == simulator_schemas/*.json ]]; then
-            changes_detected="true"
-            break
-          fi
-        done
-        echo "::set-output name=changes_detected::$changes_detected"
-
     - name: Generate graphs for all simulators
-      run: python scripts/generate_graph.py all
-
-    - name: Add graph images
-      run: git add -f docs/simulator_graphs/*.png
-
-    - name: Commit changes if any
       run: |
-        if [ "${{ steps.changes.outputs.changes_detected }}" = "true" ]; then
-          git diff --cached --quiet || git commit -m 'Generate simulator graphs'
-        else
-          echo "No changes in simulator_schemas directory. Skipping commit."
-        fi
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        python scripts/generate_graph.py all
 
-    - name: Push changes
-      if: ${{ steps.changes.outputs.changes_detected == 'true' }}
-      run: git push
+    - name: Commit graph images
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git add -f docs/*.png
+        git commit -m 'Generate simulator graphs'
+        git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
