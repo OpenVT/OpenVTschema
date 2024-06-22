@@ -2,11 +2,11 @@ name: Generate Graphs
 
 on:
   push:
-    branches:
-      - main
+    paths:
+      - 'simulator_schemas/**'
   pull_request:
-    branches:
-      - main
+    paths:
+      - 'simulator_schemas/**'
 
 permissions:
   contents: write  # Ensure the token has write permissions

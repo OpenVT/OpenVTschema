@@ -2,11 +2,11 @@ name: Validate Simulator Schemas
 
 on:
   push:
-    branches:
-      - main
+    paths:
+      - 'simulator_schemas/**'
   pull_request:
-    branches:
-      - main
+    paths:
+      - 'simulator_schemas/**'
 
 jobs:
   validate:
