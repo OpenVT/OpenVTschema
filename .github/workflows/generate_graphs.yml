@@ -32,45 +32,39 @@ jobs:
     - name: Install Graphviz
       run: sudo apt-get install graphviz
 
-    - name: Determine changed simulator schemas
+    - name: Check for changes in simulator_schemas
       id: changes
       run: |
         # Fetch all branches to ensure we can compare with the main branch
         git fetch origin main
         # Get the list of files changed in the current branch compared to the main branch
         files=$(git diff --name-only origin/main)
-        # Filter for simulator schema files
-        schemas=""
+        # Check if there are changes in the simulator_schemas directory
         for file in $files; do
           if [[ "$file" == simulator_schemas/*.json ]]; then
-            schemas="$schemas $(basename $file .json)"
+            echo "changes_detected=true" >> $GITHUB_ENV
+            break
           fi
         done
-        echo "changed_schemas=$schemas" >> $GITHUB_ENV
 
-    - name: Generate graphs for changed simulators
-      run: |
-        if [ -n "$changed_schemas" ]; then
-          for schema in $changed_schemas; do
-            python scripts/generate_graph.py $schema
-          done
-        else
-          echo "No simulator schemas changed."
-        fi
-      env:
-        changed_schemas: ${{ env.changed_schemas }}
+    - name: Generate graphs for all simulators
+      run: python scripts/generate_graph.py all
 
     - name: Add graph images
       run: git add -f docs/simulator_graphs/*.png
 
     - name: Commit changes if any
       run: |
-        git diff --cached --quiet || git commit -m 'Generate simulator graphs'
+        if [ "${{ env.changes_detected }}" = "true" ]; then
+          git diff --cached --quiet || git commit -m 'Generate simulator graphs'
+        else
+          echo "No changes in simulator_schemas directory. Skipping commit."
+        fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Push changes
-      if: success()
+      if: success() && env.changes_detected == 'true'
       run: git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
