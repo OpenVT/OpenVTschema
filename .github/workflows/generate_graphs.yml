@@ -40,7 +40,7 @@ jobs:
       run: |
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
-        git add docs/simulator_graphs/*.png
+        git add -f docs/simulator_graphs/*.png
         git commit -m 'Generate simulator graphs' || echo "No changes to commit"
         git push
       env:
