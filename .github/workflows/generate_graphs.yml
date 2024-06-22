@@ -36,6 +36,8 @@ jobs:
       id: check_changes
       run: |
         git fetch origin main
+        git checkout main
+        git pull origin main
         changes_detected=$(git diff --name-only origin/main | grep 'simulator_schemas/' || true)
         if [ -n "$changes_detected" ]; then
           echo "::set-output name=changes_detected::true"
