@@ -16,7 +16,8 @@
     {
       "object_id": "obj_001",
       "name": "Cell",
-      "attributes": ["type", "volume", "surface_area"]
+      "attributes": ["type", "volume", "surface_area"],
+      "processes": ["proc_001", "proc_002"]
     },
     {
       "object_id": "obj_002",
@@ -39,6 +40,12 @@
       "process_id": "proc_003",
       "name": "ChemicalDiffusion",
       "description": "Process describing the diffusion of chemicals within the tissue."
+    }
+  ],
+  "containment": [
+    {
+      "outer_object_id": "obj_002",
+      "inner_object_id": "obj_001"
     }
   ]
 }
