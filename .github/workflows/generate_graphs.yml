@@ -32,26 +32,11 @@ jobs:
     - name: Install Graphviz
       run: sudo apt-get install graphviz
 
-    - name: Check for changes in simulator_schemas
-      id: check_changes
-      run: |
-        git fetch origin main
-        git checkout main
-        git pull origin main
-        changes_detected=$(git diff --name-only origin/main | grep 'simulator_schemas/' || true)
-        if [ -n "$changes_detected" ]; then
-          echo "::set-output name=changes_detected::true"
-        else
-          echo "::set-output name=changes_detected::false"
-        fi
-
     - name: Generate graphs for all simulators
-      if: steps.check_changes.outputs.changes_detected == 'true'
       run: |
         python scripts/generate_graph.py all
 
-    - name: Commit graph images
-      if: steps.check_changes.outputs.changes_detected == 'true'
+    - name: Commit and push graph images
       run: |
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
