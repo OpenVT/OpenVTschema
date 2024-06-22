@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="style.css" rel="stylesheet" type="text/css" />
-  <script src="search.js" type="text/javascript"></script>
-  <!-- <script src="search.js" type="module"></script> -->
-   <style>
+  <script src="search.js" type="text/javascript"> </script>
+  <script src="objects.js" type="text/javascript"></script>
+  <style>
         table, th, td {
             border: 1px solid black;
             border-collapse: collapse;
@@ -24,40 +24,31 @@
    </head>
    <body>
    <h1>Multicellular Frameworks</h1>
+  <h2>Tables of Processes and Objects supported by one or more frameworks </h1>
   
     <div>
-	<p>Pick a process and find out what frameworks support it:
-	<p>
-	<select id="processSelect"> </select>
-	<button onclick="processSelection('processes','processSelect')">
-      View frameworks
-  </button>
+	<h3>Processes</h3>
 	
-	</p>
+	
 	<p>
 	<table id="processTable"> </table>
 	</p>
 	</div>
 	<div>
-	<p>Pick an object and find out what frameworks support it:</p>
-	<p>
-	<select id="objectSelect"> </select>
-	<button onclick="processSelection('objects','objectSelect')">
-      View frameworks
-  </button>
-	</p>
+    <p> <h3>High level objects</h3></p>	
 	<p>
 	<table id="objectTable"> </table>
 	</p>
 	</div>
 	<div>
 	<p>
-	<a href="objects.html">Objects and processes descriptions.</a>
+	<a href="search.html">Demo search of frameworks</a>
 	</p>
 	<p>
 	<a href="index.html">Back to top page. </a>
 	</p>
 	</div>
+	
    </body>
    </html>
     
