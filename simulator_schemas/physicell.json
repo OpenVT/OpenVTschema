@@ -17,7 +17,7 @@
       "object_id": "obj_001",
       "name": "Cell",
       "attributes": ["position", "volume", "state"],
-      "processes": ["proc_001", "proc_002"]
+      "processes": ["proc_001", "proc_002", "proc_003"]
     },
     {
       "object_id": "obj_002",
