@@ -40,12 +40,14 @@ jobs:
         # Get the list of files changed in the current branch compared to the main branch
         files=$(git diff --name-only origin/main)
         # Check if there are changes in the simulator_schemas directory
+        changes_detected="false"
         for file in $files; do
           if [[ "$file" == simulator_schemas/*.json ]]; then
-            echo "changes_detected=true" >> $GITHUB_ENV
+            changes_detected="true"
             break
           fi
         done
+        echo "::set-output name=changes_detected::$changes_detected"
 
     - name: Generate graphs for all simulators
       run: python scripts/generate_graph.py all
@@ -55,7 +57,7 @@ jobs:
 
     - name: Commit changes if any
       run: |
-        if [ "${{ env.changes_detected }}" = "true" ]; then
+        if [ "${{ steps.changes.outputs.changes_detected }}" = "true" ]; then
           git diff --cached --quiet || git commit -m 'Generate simulator graphs'
         else
           echo "No changes in simulator_schemas directory. Skipping commit."
@@ -64,7 +66,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Push changes
-      if: success() && env.changes_detected == 'true'
+      if: ${{ steps.changes.outputs.changes_detected == 'true' }}
       run: git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
