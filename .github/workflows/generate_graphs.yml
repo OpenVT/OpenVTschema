@@ -32,16 +32,43 @@ jobs:
     - name: Install Graphviz
       run: sudo apt-get install graphviz
 
-    - name: Generate graphs for all simulators
+    - name: Determine changed simulator schemas
+      id: changes
       run: |
-        python scripts/generate_graph.py
+        # Get the list of files changed in the last commit
+        files=$(git diff --name-only HEAD~1 HEAD)
+        # Filter for simulator schema files
+        schemas=""
+        for file in $files; do
+          if [[ "$file" == simulator_schemas/*.json ]]; then
+            schemas="$schemas $(basename $file .json)"
+          fi
+        done
+        echo "changed_schemas=$schemas" >> $GITHUB_ENV
 
-    - name: Commit graph images
+    - name: Generate graphs for changed simulators
       run: |
-        git config --global user.name 'github-actions'
-        git config --global user.email 'github-actions@github.com'
-        git add -f docs/*.png
-        git commit -m 'Generate simulator graphs'
-        git push
+        if [ -n "$changed_schemas" ]; then
+          for schema in $changed_schemas; do
+            python scripts/generate_graph.py $schema
+          done
+        else
+          echo "No simulator schemas changed."
+        fi
+      env:
+        changed_schemas: ${{ env.changed_schemas }}
+
+    - name: Add graph images
+      run: git add -f docs/simulator_graphs/*.png
+
+    - name: Commit changes if any
+      run: |
+        git diff --cached --quiet || git commit -m 'Generate simulator graphs'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Push changes
+      if: success()
+      run: git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

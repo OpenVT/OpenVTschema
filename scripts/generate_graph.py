@@ -1,5 +1,6 @@
 import json
 import os
+import argparse
 from graphviz import Digraph
 
 def load_instance(file_path):
@@ -47,19 +48,40 @@ def save_graph(dot, file_path):
     dot.render(file_path, format='png')
 
 def main():
+    parser = argparse.ArgumentParser(description="Generate graphs for simulator instances.")
+    parser.add_argument(
+        'simulator',
+        type=str,
+        help='The name of the simulator schema JSON file (without extension), or "all" to generate graphs for all simulators.')
+    args = parser.parse_args()
+
     instances_directory = 'simulator_schemas'
     output_directory = 'docs/simulator_graphs'
 
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
 
-    for filename in os.listdir(instances_directory):
-        if filename.endswith(".json"):
-            instance_file = os.path.join(instances_directory, filename)
+    if args.simulator.lower() == 'all':
+        print(f"Generating graphs for all simulators in {instances_directory}")
+        for filename in os.listdir(instances_directory):
+            if filename.endswith(".json"):
+                instance_file = os.path.join(instances_directory, filename)
+                instance = load_instance(instance_file)
+                dot = create_graph(instance)
+                output_file = os.path.join(output_directory, f"{os.path.splitext(filename)[0]}_graph")
+                save_graph(dot, output_file)
+    else:
+        simulator = args.simulator
+        if '.json' not in args.simulator:
+            simulator = f"{simulator}.json"
+        instance_file = os.path.join(instances_directory, f"{simulator}")
+        if os.path.exists(instance_file):
             instance = load_instance(instance_file)
             dot = create_graph(instance)
-            output_file = os.path.join(output_directory, f"{os.path.splitext(filename)[0]}_graph")
+            output_file = os.path.join(output_directory, f"{args.simulator}_graph")
             save_graph(dot, output_file)
+        else:
+            print(f"No instance found for simulator: {args.simulator}")
 
 
 if __name__ == "__main__":
