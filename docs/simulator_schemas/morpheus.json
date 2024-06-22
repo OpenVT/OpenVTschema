@@ -22,7 +22,8 @@
     {
       "object_id": "obj_002",
       "name": "ChemicalField",
-      "attributes": ["name", "concentration", "diffusion_coefficient"]
+      "attributes": ["name", "concentration", "diffusion_coefficient"],
+      "processes": ["proc_003"]
     }
   ],
   "processes": [
