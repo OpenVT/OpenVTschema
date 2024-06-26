@@ -4,12 +4,12 @@ import pandas as pd
 
 def load_instances(directory):
     instances = []
-    # base_url = "https://raw.githubusercontent.com/OpenVT/OpenVTschema/main/"
-    base_url = "https://raw.githubusercontent.com/rheiland/OpenVTschema/main/"
+    base_url = "https://raw.githubusercontent.com/OpenVT/OpenVTschema/main/"
+    # base_url = "https://raw.githubusercontent.com/rheiland/OpenVTschema/main/"
     # for filename in os.listdir(directory):
     # Let's establish a priority, of sorts:
     # removing biocellion until we learn if it's open source
-    for filename in ["compucell3d.json", "physicell.json", "chaste.json", "morpheus.json", "tissue_forge.json", "biodynamo.json", "artistoo.json", "simucell3d.json", "hal.json", "netlogo.json", "polyhoop.json"]:
+    for filename in ["compucell3d.json", "physicell.json", "chaste.json", "morpheus.json", "tissue_forge.json", "artistoo.json", "biodynamo.json", "simucell3d.json", "hal.json", "netlogo.json", "polyhoop.json"]:
         if filename.endswith(".json"):
             filepath = os.path.join(directory, filename)
             with open(filepath, 'r') as file:
