@@ -136,7 +136,7 @@ def save_table_platform_lngs_as_html(df, file_path):
 def main():
     instances_directory = "simulator_schemas"
 
-    output_path = "docs/basics_table.html"
+    output_path = "docs/instances_table.html"
     instances = load_instances(instances_directory)
     df = generate_basics_table(instances)
     save_table_basics_as_html(df, output_path)
