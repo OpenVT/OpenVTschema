@@ -32,12 +32,12 @@ jobs:
     - name: Install Graphviz
       run: sudo apt-get install graphviz
 
+    - name: Pull latest changes
+      run: git pull origin main --rebase
+
     - name: Generate graphs for all simulators
       run: |
         python scripts/generate_graph.py all
-
-    - name: Pull latest changes
-      run: git pull origin main --rebase
 
     - name: Commit and push graph images
       run: |
