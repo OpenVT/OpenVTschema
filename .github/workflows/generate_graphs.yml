@@ -33,7 +33,7 @@ jobs:
       run: sudo apt-get install graphviz
 
     - name: Pull latest changes
-      run: git pull origin main --rebase
+      run: git pull origin main
 
     - name: Generate graphs for all simulators
       run: |
