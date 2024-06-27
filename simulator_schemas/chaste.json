@@ -3,14 +3,14 @@
   "name": "Chaste",
   "version": "2024.1",
   "category": "Virtual Tissue",
-  "description": "Chaste (Cancer, Heart and Soft Tissue Environment) is a general-purpose simulation package aimed at simulating biological systems, particularly focusing on cardiac, cancer, and soft tissue modeling.",
+  "description": "Chaste (Cancer, Heart and Soft Tissue Environment) is a general-purpose simulation library aimed at simulating biological systems, particularly focusing on cardiac, cancer, and soft tissue modeling.",
   "platform": "Cross-platform",
   "input_formats": ["XML", "HDF5", "SBML"],
   "output_formats": ["HDF5", "VTK", "CSV"],
   "developer": "Chaste Development Team",
   "license": "Open-source",
-  "website": "https://www.cs.ox.ac.uk/chaste",
-  "documentation": "https://chaste.cs.ox.ac.uk/documentation",
+  "website": "https://chaste.github.io/",
+  "documentation": "https://chaste.github.io/",
   "last_updated": "2024-06-01",
   "objects": [
     {
@@ -41,6 +41,12 @@
       "process_id": "proc_003",
       "name": "CellMigration",
       "description": "Process describing the movement and migration of cells."
+    }
+  ],
+  "containment": [
+    {
+      "outer_object_id": "obj_002",
+      "inner_object_id": "obj_001"
     }
   ]
 }

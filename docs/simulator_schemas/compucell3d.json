@@ -1,7 +1,7 @@
 {
   "simulator_id": "sim_001",
   "name": "CompuCell3D",
-  "version": "4.3.0",
+  "version": "4.5.0",
   "category": "Virtual Tissue",
   "description": "A flexible and extensible simulation environment for multi-cellular systems biology, including the use of cellular Potts models.",
   "platform": "Cross-platform",

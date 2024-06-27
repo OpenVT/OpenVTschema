@@ -4,12 +4,12 @@ import pandas as pd
 
 def load_instances(directory):
     instances = []
-    # base_url = "https://raw.githubusercontent.com/OpenVT/OpenVTschema/main/"
-    base_url = "https://raw.githubusercontent.com/rheiland/OpenVTschema/main/"
+    base_url = "https://raw.githubusercontent.com/OpenVT/OpenVTschema/main/"
+    # base_url = "https://raw.githubusercontent.com/rheiland/OpenVTschema/main/"
     # for filename in os.listdir(directory):
     # Let's establish a priority, of sorts:
     # removing biocellion until we learn if it's open source
-    for filename in ["compucell3d.json", "physicell.json", "chaste.json", "morpheus.json", "tissue_forge.json", "biodynamo.json", "artistoo.json", "simucell3d.json", "hal.json", "netlogo.json", "polyhoop.json"]:
+    for filename in ["compucell3d.json", "physicell.json", "chaste.json", "morpheus.json", "tissue_forge.json", "artistoo.json", "biodynamo.json", "simucell3d.json", "hal.json", "netlogo.json", "polyhoop.json"]:
         if filename.endswith(".json"):
             filepath = os.path.join(directory, filename)
             with open(filepath, 'r') as file:
@@ -136,7 +136,7 @@ def save_table_platform_lngs_as_html(df, file_path):
 def main():
     instances_directory = "simulator_schemas"
 
-    output_path = "docs/basics_table.html"
+    output_path = "docs/instances_table.html"
     instances = load_instances(instances_directory)
     df = generate_basics_table(instances)
     save_table_basics_as_html(df, output_path)
