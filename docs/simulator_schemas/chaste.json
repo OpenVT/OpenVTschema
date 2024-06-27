@@ -42,5 +42,11 @@
       "name": "CellMigration",
       "description": "Process describing the movement and migration of cells."
     }
+  ],
+  "containment": [
+    {
+      "outer_object_id": "obj_002",
+      "inner_object_id": "obj_001"
+    }
   ]
 }
