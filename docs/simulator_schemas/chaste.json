@@ -3,7 +3,7 @@
   "name": "Chaste",
   "version": "2024.1",
   "category": "Virtual Tissue",
-  "description": "Chaste (Cancer, Heart and Soft Tissue Environment) is a general-purpose simulation package aimed at simulating biological systems, particularly focusing on cardiac, cancer, and soft tissue modeling.",
+  "description": "Chaste (Cancer, Heart and Soft Tissue Environment) is a general-purpose simulation library aimed at simulating biological systems, particularly focusing on cardiac, cancer, and soft tissue modeling.",
   "platform": "Cross-platform",
   "input_formats": ["XML", "HDF5", "SBML"],
   "output_formats": ["HDF5", "VTK", "CSV"],
