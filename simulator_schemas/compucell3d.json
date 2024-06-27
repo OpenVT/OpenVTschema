@@ -17,7 +17,7 @@
       "object_id": "obj_001",
       "name": "Cell",
       "attributes": ["type", "volume", "surface_area"],
-      "processes": ["proc_001", "proc_002"],
+      "processes": ["proc_001", "proc_002", "proc_004"],
       "boundary_conditions": ["bc_001", "bc_002"]
     },
     {
@@ -43,6 +43,11 @@
       "process_id": "proc_003",
       "name": "ChemicalDiffusion",
       "description": "Process describing the diffusion of chemicals within the tissue."
+    },
+    {
+      "process_id": "proc_004",
+      "name": "Apoptosis",
+      "description": "Programmed cell death process that is genetically controlled and crucial for maintaining tissue homeostasis, eliminating damaged cells, and normal development. Involves a series of biochemical events leading to characteristic cell changes and death."
     }
   ],
   "boundaries": {
