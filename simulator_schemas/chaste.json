@@ -9,8 +9,8 @@
   "output_formats": ["HDF5", "VTK", "CSV"],
   "developer": "Chaste Development Team",
   "license": "Open-source",
-  "website": "https://www.cs.ox.ac.uk/chaste",
-  "documentation": "https://chaste.cs.ox.ac.uk/documentation",
+  "website": "https://chaste.github.io/",
+  "documentation": "https://chaste.github.io/",
   "last_updated": "2024-06-01",
   "objects": [
     {
