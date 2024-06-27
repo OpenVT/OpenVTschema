@@ -36,12 +36,15 @@ jobs:
       run: |
         python scripts/generate_graph.py all
 
+    - name: Pull latest changes
+      run: git pull origin main --rebase
+
     - name: Commit and push graph images
       run: |
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
         git add -f docs/simulator_graphs/*.png
         git commit -m 'Generate simulator graphs' || echo "No changes to commit"
-        git push
+        git push origin main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
