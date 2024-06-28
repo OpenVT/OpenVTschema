@@ -47,7 +47,7 @@
     {
       "process_id": "proc_004",
       "name": "Apoptosis",
-      "description": "Programmed cell death process that is genetically controlled and crucial for maintaining tissue homeostasis, eliminating damaged cells, and normal development. Involves a series of biochemical events leading to characteristic cell changes and death."
+      "description": "Programmed cell death process."
     }
   ],
   "boundaries": {
