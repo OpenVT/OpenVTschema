@@ -18,7 +18,7 @@
       "name": "Cell",
       "attributes": ["type", "volume", "surface_area"],
       "processes": ["proc_001", "proc_002", "proc_004"],
-      "boundary_conditions": ["bc_001", "bc_002"]
+      "boundary_conditions": ["gc_001", "bc_002"]
     },
     {
       "object_id": "obj_002",
