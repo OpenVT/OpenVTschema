@@ -36,13 +36,12 @@ jobs:
       run: |
         python scripts/generate_html_table.py
 
-    - name: Commit and push graph images
+    - name: Commit and push html table
       run: |
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
-        git add --force docs/instances_table.html
+        git add -f docs/instances_table.html
         git commit -m 'Generate instances table HTML' || echo "No changes to commit"
-#        git push || echo "Push failed"
         git push origin main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
