@@ -14,8 +14,8 @@ with open('schemas/object_schema.json', 'r') as obj_schema_file:
 with open('schemas/process_schema.json', 'r') as proc_schema_file:
     process_schema = json.load(proc_schema_file)
 
-# Function to validate and save objects
-def validate_and_save_object(object_instance, object_dir='objects'):
+# Function to validate and save objects, with overwrite option
+def validate_and_save_object(object_instance, object_dir='objects', overwrite=False):
     try:
         # Validate the object instance against the schema
         validate(instance=object_instance, schema=object_schema)
@@ -25,9 +25,14 @@ def validate_and_save_object(object_instance, object_dir='objects'):
         if not os.path.exists(object_dir):
             os.makedirs(object_dir)
 
-        # Save the object instance as a JSON file using its ID
+        # Check if an object with the same ID already exists
         object_id = object_instance['id']
         filepath = os.path.join(object_dir, f"{object_id}.json")
+        if os.path.exists(filepath) and not overwrite:
+            print(f"Error: An object with ID '{object_id}' already exists. Use overwrite=True to replace it.")
+            return
+
+        # Save (or overwrite) the object instance as a JSON file
         with open(filepath, 'w') as f:
             json.dump(object_instance, f, indent=4)
         print(f"Object saved at: {filepath}")
@@ -35,8 +40,8 @@ def validate_and_save_object(object_instance, object_dir='objects'):
     except jsonschema.exceptions.ValidationError as e:
         print(f"Object validation failed: {e}")
 
-# Function to validate and save processes
-def validate_and_save_process(process_instance, process_dir='processes'):
+# Function to validate and save processes, with overwrite option
+def validate_and_save_process(process_instance, process_dir='processes', overwrite=False):
     try:
         # Validate the process instance against the schema
         validate(instance=process_instance, schema=process_schema)
@@ -46,9 +51,14 @@ def validate_and_save_process(process_instance, process_dir='processes'):
         if not os.path.exists(process_dir):
             os.makedirs(process_dir)
 
-        # Save the process instance as a JSON file using its name
+        # Check if a process with the same ID already exists
         process_id = process_instance['id']
         filepath = os.path.join(process_dir, f"{process_id}.json")
+        if os.path.exists(filepath) and not overwrite:
+            print(f"Error: A process with ID '{process_id}' already exists. Use overwrite=True to replace it.")
+            return
+
+        # Save (or overwrite) the process instance as a JSON file
         with open(filepath, 'w') as f:
             json.dump(process_instance, f, indent=4)
         print(f"Process saved at: {filepath}")
@@ -94,8 +104,9 @@ def example():
     }
 
     # Validate and save the example object and process
-    validate_and_save_object(object_instance)
-    validate_and_save_process(process_instance)
+    validate_and_save_object(object_instance, overwrite=True)
+    validate_and_save_process(process_instance, overwrite=True)
+
 
 if __name__ == "__main__":
     example()

@@ -1,0 +1,16 @@
+{
+    "id": "proc_001",
+    "name": "Cell Growth",
+    "type": "growth_process",
+    "attributes": {
+        "temperature": 37,
+        "pressure": 1.0
+    },
+    "participating_objects": [
+        "Cell"
+    ],
+    "dynamics": {
+        "type": "growth",
+        "rate": 0.02
+    }
+}

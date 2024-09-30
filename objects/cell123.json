@@ -1,0 +1,48 @@
+{
+  "id": "cell123",
+  "name": "Epithelial Cell",
+  "type": "cell",
+  "attributes": {
+    "mass": 5.5,
+    "species": "Homo sapiens",
+    "is_alive": true,
+    "dimensions": [10.5, 15.2, 7.8],
+    "genetic_code": {
+      "chromosome_1": "ATCGGCTA",
+      "chromosome_2": "GCTAGCTA"
+    },
+    "growth_rates": [0.1, 0.2, 0.3]
+  },
+  "boundary_conditions": {
+    "temperature": {
+      "type": "constant",
+      "value": 37.0,
+      "behavior": "reflective"
+    },
+    "pressure": {
+      "type": "varying",
+      "value": 100,
+      "behavior": "periodic"
+    },
+    "oxygen_concentration": {
+      "type": "gradient",
+      "value": 21.0,
+      "behavior": "diffusive"
+    }
+  },
+  "contained_object_types": [
+    {
+      "id": "organelle456",
+      "name": "Mitochondrion",
+      "type": "organelle",
+      "attributes": {
+        "ATP_production_rate": 100.0,
+        "size": [2.0, 1.0],
+        "DNA": {
+          "gene_1": "TACG",
+          "gene_2": "CGTA"
+        }
+      }
+    }
+  ]
+}

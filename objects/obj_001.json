@@ -1,0 +1,17 @@
+{
+    "id": "obj_001",
+    "name": "Cell",
+    "type": "BiologicalCell",
+    "attributes": {
+        "mass": 50,
+        "volume": 100
+    },
+    "boundary_conditions": {
+        "temperature": {
+            "type": "fixed",
+            "value": 37.0,
+            "behavior": "constant"
+        }
+    },
+    "contained_object_types": []
+}
