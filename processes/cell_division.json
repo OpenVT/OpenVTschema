@@ -1,0 +1,18 @@
+{
+  "id": "process002",
+  "name": "Cell Division",
+  "type": "division",
+  "attributes": {
+    "division_rate": 0.5
+  },
+  "participating_objects": [
+    "parent_cell",
+    "daughter_cell"
+  ],
+  "events": [
+    {
+      "name": "Mitosis Triggered",
+      "trigger": "cell_size_exceeds_threshold"
+    }
+  ]
+}

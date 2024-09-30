@@ -1,0 +1,86 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "A unique identifier for the object."
+    },
+    "name": {
+      "type": "string",
+      "description": "A descriptive name for the object."
+    },
+    "type": {
+      "type": "string",
+      "description": "The category or classification of the object, such as 'cell', 'organelle', etc."
+    },
+    "attributes": {
+      "type": "object",
+      "description": "A dictionary of key-value pairs representing the object's properties. Supports numbers, strings, booleans, arrays, or nested objects.",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "number",
+            "description": "A numerical attribute of the object."
+          },
+          {
+            "type": "string",
+            "description": "A string attribute of the object."
+          },
+          {
+            "type": "boolean",
+            "description": "A boolean attribute of the object (true/false)."
+          },
+          {
+            "type": "array",
+            "items": { "type": "number" },
+            "description": "An array of numbers, representing attributes such as dimensions or growth rates."
+          },
+          {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "An array of strings, representing attributes like a list of genes."
+          },
+          {
+            "type": "array",
+            "items": { "type": "boolean" },
+            "description": "An array of booleans, which could represent on/off states for multiple conditions."
+          },
+          {
+            "type": "object",
+            "properties": {},
+            "description": "A nested object, which can be used for complex structures like dictionaries or nested attributes."
+          }
+        ]
+      }
+    },
+    "boundary_conditions": {
+      "type": "object",
+      "description": "Describes how different variables behave at the boundaries of the object. Supports custom user-defined variables.",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of boundary condition, such as 'constant', 'varying', or 'gradient'."
+          },
+          "value": {
+            "type": ["number", "string"],
+            "description": "The value assigned to the boundary, which could be a numerical limit or a string value."
+          },
+          "behavior": {
+            "type": "string",
+            "description": "The behavior of the boundary, such as 'reflective', 'periodic', or 'diffusive'."
+          }
+        },
+        "required": ["type", "value", "behavior"]
+      }
+    },
+    "contained_object_types": {
+      "type": "array",
+      "description": "A list of nested objects that are contained within this object, such as organelles within a cell.",
+      "items": { "$ref": "#" }
+    }
+  },
+  "required": ["id", "name", "type", "attributes"],
+  "description": "This schema defines an object, including its attributes, boundary conditions, and any contained objects. It supports a variety of data types and structures, allowing flexibility in defining biological entities."
+}

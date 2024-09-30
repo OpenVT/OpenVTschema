@@ -1,0 +1,101 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "A unique identifier for the process."
+    },
+    "name": {
+      "type": "string",
+      "description": "A descriptive name for the process."
+    },
+    "type": {
+      "type": "string",
+      "description": "The category or classification of the process, such as 'reaction', 'transport', etc."
+    },
+    "attributes": {
+      "type": "object",
+      "description": "A dictionary of key-value pairs representing the process's properties. Supports numbers, strings, booleans, arrays, or nested objects.",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "number",
+            "description": "A numerical attribute of the process."
+          },
+          {
+            "type": "string",
+            "description": "A string attribute of the process."
+          },
+          {
+            "type": "boolean",
+            "description": "A boolean attribute of the process (true/false)."
+          },
+          {
+            "type": "array",
+            "items": { "type": "number" },
+            "description": "An array of numbers representing different numeric properties of the process."
+          },
+          {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "An array of strings representing different string properties of the process."
+          },
+          {
+            "type": "array",
+            "items": { "type": "boolean" },
+            "description": "An array of booleans representing different on/off states for the process."
+          },
+          {
+            "type": "object",
+            "properties": {},
+            "description": "A nested object representing a complex attribute or struct related to the process."
+          }
+        ]
+      }
+    },
+    "participating_objects": {
+      "type": "array",
+      "description": "A list of objects involved in this process, identified by their object type.",
+      "items": { "type": "string" }
+    },
+    "dynamics": {
+      "type": "object",
+      "description": "Describes the dynamic behavior of the process, such as rates of change or interaction types.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The type of dynamics, such as 'rate', 'interaction', etc."
+        },
+        "rate": {
+          "type": "number",
+          "description": "The rate or speed of the dynamic process."
+        }
+      },
+      "required": ["type", "rate"]
+    },
+    "events": {
+      "type": "array",
+      "description": "A list of events that can occur as part of the process, each with a name and trigger condition.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the event."
+          },
+          "trigger": {
+            "type": "string",
+            "description": "The condition that triggers the event, such as a threshold being met or an external signal."
+          }
+        },
+        "required": ["name", "trigger"]
+      }
+    }
+  },
+  "required": ["id", "name", "type", "attributes", "participating_objects"],
+  "oneOf": [
+    { "required": ["dynamics"] },
+    { "required": ["events"] }
+  ],
+  "description": "This schema defines a process in a simulation, including its associated objects, attributes, dynamics, and events. Either dynamics or events must be provided for the process."
+}
