@@ -37,10 +37,7 @@ class ObjectCreator:
     def add_attribute(self, **kwargs):
         """Add attributes dynamically based on schema."""
         for key, value in kwargs.items():
-            if key in self.schema['properties']['attributes']['additionalProperties']['oneOf']:
-                self.object_instance["attributes"][key] = value
-            else:
-                print(f"Invalid attribute: {key} not allowed in schema.")
+            self.object_instance["attributes"][key] = value
 
     def add_boundary_condition(self, var, condition):
         """Add boundary condition dynamically."""
@@ -94,9 +91,8 @@ class ProcessCreator:
             "name": None,
             "type": None,
             "attributes": {},
-            "participating_objects": [],
-            "dynamics": None,
-            "events": []
+            "participating_objects": []
+            # Note: 'dynamics' and 'events' are not initialized here
         }
 
     def set_id(self, process_id):
@@ -111,18 +107,23 @@ class ProcessCreator:
     def add_attribute(self, **kwargs):
         """Add attributes dynamically based on schema."""
         for key, value in kwargs.items():
-            if key in self.schema['properties']['attributes']['additionalProperties']['oneOf']:
-                self.process_instance["attributes"][key] = value
-            else:
-                print(f"Invalid attribute: {key} not allowed in schema.")
+            self.process_instance["attributes"][key] = value
 
     def add_participating_object(self, obj_name):
         self.process_instance["participating_objects"].append(obj_name)
 
     def set_dynamics(self, dynamics_type, rate):
+        # Remove events if dynamics are being set
+        # if "events" in self.process_instance:
+        #     del self.process_instance["events"]
         self.process_instance["dynamics"] = {"type": dynamics_type, "rate": rate}
 
     def add_event(self, event_name, trigger):
+        # Remove dynamics if events are being set
+        # if "dynamics" in self.process_instance:
+        #     del self.process_instance["dynamics"]
+        if "events" not in self.process_instance:
+            self.process_instance["events"] = []
         self.process_instance["events"].append({"name": event_name, "trigger": trigger})
 
     def validate(self):
@@ -135,6 +136,15 @@ class ProcessCreator:
         if missing_fields:
             print(f"Missing required fields: {missing_fields}")
             return False
+
+        # Check that only one of 'dynamics' or 'events' is set
+        if "dynamics" in self.process_instance and "events" in self.process_instance:
+            print("Validation failed: Cannot have both dynamics and events.")
+            return False
+        if "dynamics" not in self.process_instance and "events" not in self.process_instance:
+            print("Validation failed: Must have either dynamics or events.")
+            return False
+
         try:
             validate(instance=self.process_instance, schema=self.schema)
             print("Process is valid.")
@@ -160,6 +170,7 @@ class ProcessCreator:
         print(f"Process saved at: {filepath}")
 
 
+
 # Example usage of the API
 def example():
     # Create an object using the API
@@ -178,7 +189,7 @@ def example():
     proc_creator.set_type("circulation_process")
     proc_creator.add_attribute(temperature=37, velocity=2.0)
     proc_creator.set_dynamics("flow", 0.05)
-    proc_creator.add_event("valve_open", "pressure_exceeds_threshold")
+    # proc_creator.add_event("valve_open", "pressure_exceeds_threshold")
     proc_creator.save(overwrite=True)
 
 if __name__ == "__main__":
