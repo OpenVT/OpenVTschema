@@ -14,6 +14,8 @@ with open('schemas/process_schema.json', 'r') as proc_schema_file:
 # Helper class for creating objects
 class ObjectCreator:
     def __init__(self):
+        # Initialize the object instance with defaults based on the schema
+        self.schema = object_schema
         self.object_instance = {
             "id": None,
             "name": None,
@@ -32,22 +34,61 @@ class ObjectCreator:
     def set_type(self, obj_type):
         self.object_instance["type"] = obj_type
 
-    def add_attribute(self, key, value):
-        self.object_instance["attributes"][key] = value
+    def add_attribute(self, **kwargs):
+        """Add attributes dynamically based on schema."""
+        for key, value in kwargs.items():
+            if key in self.schema['properties']['attributes']['additionalProperties']['oneOf']:
+                self.object_instance["attributes"][key] = value
+            else:
+                print(f"Invalid attribute: {key} not allowed in schema.")
 
     def add_boundary_condition(self, var, condition):
+        """Add boundary condition dynamically."""
         self.object_instance["boundary_conditions"][var] = condition
 
     def add_contained_object(self, contained_obj_type):
         self.object_instance["contained_object_types"].append(contained_obj_type)
 
-    def get_instance(self):
-        return self.object_instance
+    def validate(self):
+        """Check the instance for missing fields and validate against the schema."""
+        missing_fields = []
+        for key in self.schema['required']:
+            if self.object_instance.get(key) is None:
+                missing_fields.append(key)
+
+        if missing_fields:
+            print(f"Missing required fields: {missing_fields}")
+            return False
+        try:
+            validate(instance=self.object_instance, schema=self.schema)
+            print("Object is valid.")
+            return True
+        except jsonschema.exceptions.ValidationError as e:
+            # Detailed error message
+            error_message = f"Validation failed at {list(e.path)}: {e.message}"
+            print(error_message)
+            return False
+
+    def save(self, object_dir='objects', overwrite=False):
+        """Save the validated object to a file."""
+        if not self.validate():
+            print("Cannot save object. Validation failed.")
+            return
+        object_id = self.object_instance['id']
+        filepath = os.path.join(object_dir, f"{object_id}.json")
+        if os.path.exists(filepath) and not overwrite:
+            print(f"Error: An object with ID '{object_id}' already exists. Use overwrite=True to replace it.")
+            return
+        with open(filepath, 'w') as f:
+            json.dump(self.object_instance, f, indent=4)
+        print(f"Object saved at: {filepath}")
 
 
 # Helper class for creating processes
 class ProcessCreator:
     def __init__(self):
+        # Initialize the process instance with defaults based on the schema
+        self.schema = process_schema
         self.process_instance = {
             "id": None,
             "name": None,
@@ -67,8 +108,13 @@ class ProcessCreator:
     def set_type(self, process_type):
         self.process_instance["type"] = process_type
 
-    def add_attribute(self, key, value):
-        self.process_instance["attributes"][key] = value
+    def add_attribute(self, **kwargs):
+        """Add attributes dynamically based on schema."""
+        for key, value in kwargs.items():
+            if key in self.schema['properties']['attributes']['additionalProperties']['oneOf']:
+                self.process_instance["attributes"][key] = value
+            else:
+                print(f"Invalid attribute: {key} not allowed in schema.")
 
     def add_participating_object(self, obj_name):
         self.process_instance["participating_objects"].append(obj_name)
@@ -79,90 +125,61 @@ class ProcessCreator:
     def add_event(self, event_name, trigger):
         self.process_instance["events"].append({"name": event_name, "trigger": trigger})
 
-    def get_instance(self):
-        return self.process_instance
+    def validate(self):
+        """Check the instance for missing fields and validate against the schema."""
+        missing_fields = []
+        for key in self.schema['required']:
+            if self.process_instance.get(key) is None:
+                missing_fields.append(key)
 
+        if missing_fields:
+            print(f"Missing required fields: {missing_fields}")
+            return False
+        try:
+            validate(instance=self.process_instance, schema=self.schema)
+            print("Process is valid.")
+            return True
+        except jsonschema.exceptions.ValidationError as e:
+            # Detailed error message
+            error_message = f"Validation failed at {list(e.path)}: {e.message}"
+            print(error_message)
+            return False
 
-# Function to validate and save objects, with overwrite option
-def validate_and_save_object(object_instance, object_dir='objects', overwrite=False):
-    try:
-        # Validate the object instance against the schema
-        validate(instance=object_instance, schema=object_schema)
-        print("Object is valid.")
-
-        # Ensure the objects directory exists
-        if not os.path.exists(object_dir):
-            os.makedirs(object_dir)
-
-        # Check if an object with the same ID already exists
-        object_id = object_instance['id']
-        filepath = os.path.join(object_dir, f"{object_id}.json")
-        if os.path.exists(filepath) and not overwrite:
-            print(f"Error: An object with ID '{object_id}' already exists. Use overwrite=True to replace it.")
+    def save(self, process_dir='processes', overwrite=False):
+        """Save the validated process to a file."""
+        if not self.validate():
+            print("Cannot save process. Validation failed.")
             return
-
-        # Save (or overwrite) the object instance as a JSON file
-        with open(filepath, 'w') as f:
-            json.dump(object_instance, f, indent=4)
-        print(f"Object saved at: {filepath}")
-
-    except jsonschema.exceptions.ValidationError as e:
-        print(f"Object validation failed: {e}")
-
-
-# Function to validate and save processes, with overwrite option
-def validate_and_save_process(process_instance, process_dir='processes', overwrite=False):
-    try:
-        # Validate the process instance against the schema
-        validate(instance=process_instance, schema=process_schema)
-        print("Process is valid.")
-
-        # Ensure the processes directory exists
-        if not os.path.exists(process_dir):
-            os.makedirs(process_dir)
-
-        # Check if a process with the same ID already exists
-        process_id = process_instance['id']
+        process_id = self.process_instance['id']
         filepath = os.path.join(process_dir, f"{process_id}.json")
         if os.path.exists(filepath) and not overwrite:
             print(f"Error: A process with ID '{process_id}' already exists. Use overwrite=True to replace it.")
             return
-
-        # Save (or overwrite) the process instance as a JSON file
         with open(filepath, 'w') as f:
-            json.dump(process_instance, f, indent=4)
+            json.dump(self.process_instance, f, indent=4)
         print(f"Process saved at: {filepath}")
-
-    except jsonschema.exceptions.ValidationError as e:
-        print(f"Process validation failed: {e}")
 
 
 # Example usage of the API
 def example():
     # Create an object using the API
     obj_creator = ObjectCreator()
-    obj_creator.set_id("obj_002")
-    obj_creator.set_name("Neuron Cell")
-    obj_creator.set_type("NeuralCell")
-    obj_creator.add_attribute("mass", 30)
-    obj_creator.add_boundary_condition("membrane_potential",
-                                       {"type": "dynamic", "value": -70, "behavior": "oscillating"})
-    object_instance = obj_creator.get_instance()
+    obj_creator.set_id("obj_003")
+    obj_creator.set_name("Heart Cell")
+    obj_creator.set_type("CardiacCell")
+    obj_creator.add_attribute(mass=100, volume=200)
+    obj_creator.add_boundary_condition("pressure", {"type": "dynamic", "value": 120, "behavior": "periodic"})
+    obj_creator.save(overwrite=True)
 
     # Create a process using the API
     proc_creator = ProcessCreator()
-    proc_creator.set_id("proc_002")
-    proc_creator.set_name("Action Potential")
-    proc_creator.set_type("electrical_process")
-    proc_creator.add_attribute("temperature", 37)
-    proc_creator.set_dynamics("spike", 1.0)
-    proc_creator.add_event("threshold_reached", "membrane_potential_exceeds")
-    process_instance = proc_creator.get_instance()
-
-    # Validate and save object and process
-    validate_and_save_object(object_instance, overwrite=True)
-    validate_and_save_process(process_instance, overwrite=True)
-
+    proc_creator.set_id("proc_003")
+    proc_creator.set_name("Blood Flow")
+    proc_creator.set_type("circulation_process")
+    proc_creator.add_attribute(temperature=37, velocity=2.0)
+    proc_creator.set_dynamics("flow", 0.05)
+    proc_creator.add_event("valve_open", "pressure_exceeds_threshold")
+    proc_creator.save(overwrite=True)
 
 if __name__ == "__main__":
     example()
