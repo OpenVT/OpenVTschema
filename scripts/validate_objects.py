@@ -66,6 +66,42 @@ def validate_and_save_process(process_instance, process_dir='processes', overwri
     except jsonschema.exceptions.ValidationError as e:
         print(f"Process validation failed: {e}")
 
+# function to validate all instances in the 'objects' and 'processes' directories
+def validate_all_instances():
+    print("Validating all object and process instances...")
+
+    # Validate all objects in the 'objects' directory
+    object_dir = 'objects'
+    if os.path.exists(object_dir):
+        for filename in os.listdir(object_dir):
+            if filename.endswith('.json'):
+                filepath = os.path.join(object_dir, filename)
+                with open(filepath, 'r') as f:
+                    object_instance = json.load(f)
+                    try:
+                        validate(instance=object_instance, schema=object_schema)
+                        print(f"Object {object_instance['id']} is valid.")
+                    except jsonschema.exceptions.ValidationError as e:
+                        print(f"Object {object_instance['id']} validation failed: {e}")
+
+    # Validate all processes in the 'processes' directory
+    process_dir = 'processes'
+    if os.path.exists(process_dir):
+        for filename in os.listdir(process_dir):
+            if filename.endswith('.json'):
+                filepath = os.path.join(process_dir, filename)
+                with open(filepath, 'r') as f:
+                    process_instance = json.load(f)
+                    try:
+                        validate(instance=process_instance, schema=process_schema)
+                        print(f"Process {process_instance['id']} is valid.")
+                    except jsonschema.exceptions.ValidationError as e:
+                        print(f"Process {process_instance['id']} validation failed: {e}")
+
+    print("Validation completed.")
+
+
+
 # Example usage
 def example():
     # Example object instance
@@ -110,3 +146,4 @@ def example():
 
 if __name__ == "__main__":
     example()
+    validate_all_instances()
