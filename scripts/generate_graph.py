@@ -28,13 +28,13 @@ def create_graph(instance):
         for bc_id in obj.get('boundary_conditions', []):
             bc = next((bc for bc in instance['boundaries']['pde_boundary_conditions'] if bc['bc_id'] == bc_id), None)
             if bc:
-                bc_label = f"{bc['type']} BC\nValue: {bc['value']}"
+                bc_label = f"{bc['name']} BC\nValue: {bc['value']}"
                 dot.node(bc['bc_id'], bc_label, shape='diamond')
                 dot.edge(obj['object_id'], bc['bc_id'], label="adheres to")
             else:
                 bc = next((bc for bc in instance['boundaries']['geometric_constraints'] if bc['gc_id'] == bc_id), None)
                 if bc:
-                    bc_label = f"{bc['type']} GC\nDims: {', '.join(bc['dimensions'])}"
+                    bc_label = f"{bc['name']} GC\nDims: {', '.join(bc['dimensions'])}"
                     dot.node(bc['gc_id'], bc_label, shape='diamond')
                     dot.edge(obj['object_id'], bc['gc_id'], label="adheres to")
 
