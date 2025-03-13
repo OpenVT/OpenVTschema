@@ -17,14 +17,14 @@
       "object_id": "obj_001",
       "name": "Cell",
       "attributes": ["type", "volume", "surface_area"],
-      "processes": ["proc_001", "proc_002", "proc_004"],
+      "processes": ["proc_001", "proc_002", "proc_004", "proc_005", "proc_006"],
       "boundary_conditions": ["gc_001", "bc_002"]
     },
     {
       "object_id": "obj_002",
       "name": "ChemicalField",
       "attributes": ["name", "concentration", "diffusion_coefficient"],
-      "processes": ["proc_003"],
+      "processes": ["proc_003", "proc_006"],
       "boundary_conditions": ["bc_001"]
     }
   ],
@@ -48,6 +48,16 @@
       "process_id": "proc_004",
       "name": "Apoptosis",
       "description": "Programmed cell death process."
+    },
+	{
+      "process_id": "proc_005",
+      "name": "ContactEnergy",
+      "description": "Conditional force generating, contrived, process. Estimate of adhesion energy between neighboring cells."
+    },
+	{
+      "process_id": "proc_006",
+      "name": "Secretion",
+      "description": "Release of chemicals from inside a cell."
     }
   ],
   "boundaries": {
