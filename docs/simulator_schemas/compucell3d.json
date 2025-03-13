@@ -55,13 +55,13 @@
       {
         "bc_id": "bc_001",
         "description": "Dirichlet boundary condition for chemical concentration",
-        "type": "Dirichlet",
+        "name": "Dirichlet",
         "value": 1.0
       },
       {
         "bc_id": "bc_002",
         "description": "Neumann boundary condition for chemical flux",
-        "type": "Neumann",
+        "name": "Neumann",
         "value": 0.0
       }
     ],
@@ -69,7 +69,7 @@
       {
         "gc_id": "gc_001",
         "description": "Periodic boundary condition for cell movement",
-        "type": "Periodic",
+        "name": "Periodic",
         "dimensions": ["x", "y"]
       }
     ]
