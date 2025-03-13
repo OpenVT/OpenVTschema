@@ -256,7 +256,7 @@ async function elementHide(elementId) {
 }
 
 async function setViewSchemaButtonEvent(schemaFileName) {
-    schema_btn = document.getElementById(viewSchema_btn)
+    const schema_btn = document.getElementById(viewSchema_btn)
     schema_btn.addEventListener("click", (e) => {
         //console.log("string value: ${schemaFileName}")
         viewSchemaInAnotherPage(schemaFileName)
@@ -264,7 +264,7 @@ async function setViewSchemaButtonEvent(schemaFileName) {
 }
 
 async function setSaveEditsBtn_event(frameworkFileName, framework_JSON, item_JSON_key, catagoryJSON){
-    saveEdits = document.getElementById(save_edits_btnId);
+    const saveEdits = document.getElementById(save_edits_btnId);
     saveEdits.addEventListener("click", (e) => {
         saveSchemaEdits(frameworkFileName, framework_JSON, item_JSON_key, catagoryJSON)
     });
@@ -279,7 +279,7 @@ async function saveSchemaEdits(frameworkFileName, framework_JSON, item_key, item
 }
 
 async function viewSchemaInAnotherPage(frameworkFileName) {
-    urlStr = "viewSchema.html?schema_fileName=simulator_schemas/" + frameworkFileName  
+    const urlStr = "viewSchema.html?schema_fileName=simulator_schemas/" + frameworkFileName  
     window.open(urlStr, '_blank').focus();
 }
 
