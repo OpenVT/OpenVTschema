@@ -17,15 +17,23 @@
       "object_id": "obj_001",
       "name": "Cell",
       "attributes": ["type", "volume", "surface_area"],
-      "processes": ["proc_001", "proc_002", "proc_004", "proc_005", "proc_006"],
+      "processes": ["proc_001", "proc_002", "proc_004", "proc_005", "proc_006", "proc_007"],
       "boundary_conditions": ["gc_001", "bc_002"]
     },
     {
       "object_id": "obj_002",
       "name": "ChemicalField",
-      "attributes": ["name", "concentration", "diffusion_coefficient"],
-      "processes": ["proc_003", "proc_006"],
+      "attributes": ["name", "concentration", "global_diffusion_coefficient", "global_decay_constant", "local_diffusion_coefficient", "local_decay_coefficient", "type_scaler_or_vector", "lattice_or_lattice_free"],
+      "processes": ["proc_003", "proc_006", "proc_007"],
       "boundary_conditions": ["bc_001"]
+    },
+    {
+      "object_id": "obj_003",
+      "name": "Universe",
+      "attributes": ["volume","surface_area", "shape", "temperature", "size"],
+      "description": "Top layer container that holds the entire simulation",
+      "processes": "",
+      "boundary_conditions": ["bc_001", "bc_002", "gc_001"]
     }
   ],
   "processes": [
@@ -58,7 +66,13 @@
       "process_id": "proc_006",
       "name": "Secretion",
       "description": "Release of chemicals from inside a cell."
+    },
+    {
+      "process_id": "proc_007",
+      "name": "Uptake",
+      "description": "Uptake of chemical from outside of object"
     }
+       
   ],
   "boundaries": {
     "pde_boundary_conditions": [
