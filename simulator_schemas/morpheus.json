@@ -1,29 +1,36 @@
 {
   "simulator_id": "sim_004",
   "name": "Morpheus",
-  "version": "",
+  "version": "2.3.8",
   "category": "Virtual Tissue",
   "description": "A modeling and simulation environment for the study of multi-scale and multicellular systems, able to couple ODEs, PDEs and cellular Potts models.",
   "platform": "Cross-platform",
-  "input_formats": [],
-  "output_formats": [],
-  "developer": "Morpheus Development Team",
-  "license": "Open-source",
+  "input_formats": ["XML", "SBML", "CSV", "TIFF", "Python"],
+  "output_formats": ["CSV", "PNG", "PDF", "SVG", "MP4"],
+  "developer": "Morpheus.Lab, TUD Dresden University of Technology, Germany",
+  "license": "BSD-3-Clause",
   "website": "https://morpheus.gitlab.io/",
-  "documentation": "",
-  "last_updated": "2024-06-01",
+  "documentation": "https://morpheus.gitlab.io/courses/",
+  "last_updated": "2024-08-30",
   "objects": [
     {
       "object_id": "obj_001",
       "name": "Cell",
-      "attributes": ["type", "volume", "surface_area"],
-      "processes": ["proc_001", "proc_002"]
+      "attributes": ["position", "surface_area", "type", "volume"],
+      "processes": ["proc_001", "proc_002", "proc_004", "proc_005", "proc_006", "proc_007"],
+      "boundary_conditions": ["bc_001", "gc_001"]
     },
     {
       "object_id": "obj_002",
       "name": "ChemicalField",
       "attributes": ["name", "concentration", "diffusion_coefficient"],
-      "processes": ["proc_003"]
+      "processes": ["proc_003"],
+      "boundary_conditions": ["bc_001", "bc_002", "gc_001"]
+    },
+    {
+      "object_id": "obj_003",
+      "name": "Microenvironment",
+      "attributes": ["oxygen", "nutrients", "waste"]
     }
   ],
   "processes": [
@@ -41,11 +48,57 @@
       "process_id": "proc_003",
       "name": "ChemicalDiffusion",
       "description": "Process describing the diffusion of chemicals within the tissue."
+    },
+    {
+      "process_id": "proc_004",
+      "name": "Apoptosis",
+      "description": "Programmed cell death process."
+    },
+    {
+      "process_id": "proc_005",
+      "name": "CellProliferation",
+      "description": "Process describing the proliferation and growth of cells."
+    },
+    {
+      "process_id": "proc_006",
+      "name": "CellMigration",
+      "description": "Process describing the movement and migration of cells."
+    },
+    {
+      "process_id": "proc_007",
+      "name": "CellDeath",
+      "description": "Process describing programmed cell death (apoptosis) and necrosis."
     }
   ],
+  "boundaries": {
+    "pde_boundary_conditions": [
+      {
+        "bc_id": "bc_001",
+        "description": "Dirichlet boundary condition for chemical concentration",
+        "type": "Dirichlet"
+      },
+      {
+        "bc_id": "bc_002",
+        "description": "Neumann boundary condition for chemical flux",
+        "type": "Neumann"
+      }
+    ],
+    "geometric_constraints": [
+      {
+        "gc_id": "gc_001",
+        "description": "Periodic boundary condition for cell movement",
+        "type": "Periodic",
+        "dimensions": ["x", "y"]
+      }
+    ]
+  },
   "containment": [
     {
       "outer_object_id": "obj_002",
+      "inner_object_id": "obj_001"
+    },
+    {
+      "outer_object_id": "obj_003",
       "inner_object_id": "obj_001"
     }
   ]
