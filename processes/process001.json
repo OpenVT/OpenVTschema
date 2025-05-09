@@ -1,0 +1,17 @@
+{
+  "id": "process001",
+  "name": "Oxygen Diffusion",
+  "type": "diffusion",
+  "attributes": {
+    "diffusion_coefficient": 1.5,
+    "temperature_dependence": true
+  },
+  "participating_objects": [
+    "cell_membrane",
+    "extracellular_space"
+  ],
+  "dynamics": {
+    "type": "rate",
+    "rate": 0.02
+  }
+}
